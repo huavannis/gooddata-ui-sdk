@@ -686,6 +686,16 @@
         "comment": "",
         "limit": 0
     },
+    "properties.canvas.continuousLine.label": {
+        "value": "Continuous line",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.continuousLine.tooltip": {
+        "value": "Draw a dashed line between the points with missing values.",
+        "comment": "",
+        "limit": 0
+    },
     "properties.canvas.dataLabels": {
         "value": "Data Labels",
         "comment": "",

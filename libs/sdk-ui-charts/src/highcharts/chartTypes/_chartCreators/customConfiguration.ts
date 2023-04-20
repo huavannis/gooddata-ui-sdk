@@ -1330,6 +1330,48 @@ function getReversedStacking(chartOptions: IChartOptions, _config: any, chartCon
     };
 }
 
+function getContinuousLineConfiguration(
+    _chartOptions: IChartOptions,
+    config: HighchartsOptions,
+    chartConfig?: IChartConfig,
+) {
+    const continuousLineEnabled = chartConfig?.continuousLine?.enabled ?? false;
+    if (continuousLineEnabled) {
+        const { series } = config;
+        const newSeries = series.map((seriesItem: any) => {
+            return {
+                ...seriesItem,
+                zones: buildZones(seriesItem.data),
+                zoneAxis: "x",
+                connectNulls: true,
+            };
+        });
+        return {
+            series: newSeries,
+        };
+    }
+    return {};
+}
+
+function buildZones(seriesItemData: any): any {
+    let previousValue: any;
+    return seriesItemData.map((dataItem: any, index: any) => {
+        const dataValue = dataItem.y;
+        if (dataValue === null || (previousValue === null && index > 0)) {
+            previousValue = dataValue;
+            return {
+                dashStyle: "shortDash",
+                value: index,
+            };
+        }
+        previousValue = dataValue;
+        return {
+            dashStyle: "solid",
+            value: index,
+        };
+    });
+}
+
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
@@ -1357,6 +1399,7 @@ export function getCustomizedConfiguration(
         getTargetCursorConfigurationForBulletChart,
         getZoomingAndPanningConfiguration,
         getReversedStacking,
+        getContinuousLineConfiguration,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

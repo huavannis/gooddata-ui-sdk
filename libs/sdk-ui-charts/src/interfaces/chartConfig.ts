@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IColorPalette, Identifier } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
@@ -62,6 +62,11 @@ export interface IChartConfig {
      * Configure chart grid.
      */
     grid?: IGridConfig;
+
+    /**
+     * Configure chart continuous line.
+     */
+    continuousLine?: IContinuousLineConfig;
 
     /**
      * Customize format string to use for numeric tics on the X axis.
@@ -264,6 +269,13 @@ export interface IChartConfig {
  * @public
  */
 export interface IGridConfig {
+    enabled?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface IContinuousLineConfig {
     enabled?: boolean;
 }
 
